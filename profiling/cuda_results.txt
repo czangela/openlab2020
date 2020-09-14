@@ -1,0 +1,148 @@
+[bash][atspot01]:build > nvprof bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu20/evt10.txt
+Read 41629 spacepoints from file: /atlas/acts_data/atlas_seeds/pu20/evt10.txt
+==25881== NVPROF is profiling process 25881, command: bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu20/evt10.txt
+Allocating 4746 MB memory on device:
+ /-- Device ID 0 -------------------------------\
+ | Name: GeForce RTX 2060                       |
+ | Max. threads per block: 1024                 |
+ | Concurrent kernels: true                     |
+ | Total memory: 5933.25 MB                     |
+ \----------------------------------------------/
+Done with the seedfinding on the host
+Done with the seedfinding on the device
+
+-------------------------- Results ---------------------------
+|          |     Host     |    Device    | Speedup/agreement |
+--------------------------------------------------------------
+| Time [s] |    0.107000  |       0.035  |       3.057143    |
+|   Seeds  |        7939  |        7939  |     100.000000    |
+--------------------------------------------------------------
+
+==25881== Profiling application: bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu20/evt10.txt
+==25881== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   20.59%  1.9799ms       130  15.229us  8.5770us  27.234us  Acts::Cuda::Kernels::transformCoordinates(unsigned int, unsigned int, unsigned int, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::LinCircle*, Acts::Cuda::Details::LinCircle*)
+                   20.52%  1.9728ms      1560  1.2640us     672ns  11.713us  [CUDA memcpy HtoD]
+                   12.49%  1.2004ms       260  4.6160us  1.9200us  12.833us  void Acts::Cuda::Kernels::findDublets<int=1>(unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const , float, float, float, float, float, unsigned int*, unsigned long*)
+                   12.41%  1.1934ms       260  4.5890us  1.9840us  11.680us  void Acts::Cuda::Kernels::findDublets<int=0>(unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const , float, float, float, float, float, unsigned int*, unsigned long*)
+                   10.89%  1.0474ms       130  8.0560us  3.1040us  22.785us  Acts::Cuda::Kernels::findTriplets(unsigned long, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::LinCircle const *, Acts::Cuda::Details::LinCircle const *, float, float, float, float, float, float, unsigned int*, unsigned long*, unsigned int*, unsigned int*, Acts::Cuda::Details::Triplet*)
+                    9.01%  865.84us       912     949ns     832ns  3.4890us  [CUDA memcpy DtoH]
+                    8.04%  772.66us       130  5.9430us  3.4560us  18.849us  Acts::Cuda::Kernels::filterTriplets2Sp(float (*) (Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &), bool (*) (float, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &), unsigned long, unsigned int, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long, unsigned int*, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::Triplet const *, float, float, float, unsigned long, unsigned int*, Acts::Cuda::Details::Triplet*)
+                    6.05%  582.12us       260  2.2380us  2.1440us  2.4640us  Acts::Cuda::Kernels::countDublets(unsigned long, unsigned int const *, unsigned int const *, Acts::Cuda::Details::DubletCounts*)
+      API calls:   84.05%  175.19ms         2  87.596ms  70.812ms  104.38ms  cudaMalloc
+                    7.16%  14.933ms      2470  6.0450us  2.4970us  26.608us  cudaMemcpy
+                    3.74%  7.7991ms       910  8.5700us  3.3400us  33.786us  cudaDeviceSynchronize
+                    2.37%  4.9377ms      1170  4.2200us  3.1700us  29.563us  cudaLaunchKernel
+                    1.81%  3.7752ms         2  1.8876ms  937.52us  2.8376ms  cudaFree
+                    0.37%  762.10us      3121     244ns     172ns  3.0140us  cudaGetDevice
+                    0.13%  277.93us         1  277.93us  277.93us  277.93us  cuDeviceTotalMem
+                    0.12%  255.74us        97  2.6360us     279ns  103.49us  cuDeviceGetAttribute
+                    0.10%  214.54us         1  214.54us  214.54us  214.54us  cudaGetDeviceProperties
+                    0.06%  124.48us      1170     106ns      75ns     194ns  cudaGetLastError
+                    0.06%  115.71us         2  57.853us  30.308us  85.399us  cudaMemcpyFromSymbol
+                    0.02%  38.401us         1  38.401us  38.401us  38.401us  cuDeviceGetName
+                    0.00%  6.1350us         1  6.1350us  6.1350us  6.1350us  cuDeviceGetPCIBusId
+                    0.00%  4.0810us         2  2.0400us  1.0340us  3.0470us  cudaSetDevice
+                    0.00%  2.5670us         3     855ns     256ns  1.8170us  cuDeviceGetCount
+                    0.00%  1.7760us         2     888ns     318ns  1.4580us  cuDeviceGet
+                    0.00%  1.2530us         1  1.2530us  1.2530us  1.2530us  cudaGetDeviceCount
+                    0.00%     594ns         1     594ns     594ns     594ns  cuDeviceGetUuid
+[bash][atspot01]:build > nvprof bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu100/evt10.txt
+Read 189600 spacepoints from file: /atlas/acts_data/atlas_seeds/pu100/evt10.txt
+==25907== NVPROF is profiling process 25907, command: bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu100/evt10.txt
+Allocating 4746 MB memory on device:
+ /-- Device ID 0 -------------------------------\
+ | Name: GeForce RTX 2060                       |
+ | Max. threads per block: 1024                 |
+ | Concurrent kernels: true                     |
+ | Total memory: 5933.25 MB                     |
+ \----------------------------------------------/
+Done with the seedfinding on the host
+Done with the seedfinding on the device
+
+-------------------------- Results ---------------------------
+|          |     Host     |    Device    | Speedup/agreement |
+--------------------------------------------------------------
+| Time [s] |    2.804000  |       0.318  |       8.817610    |
+|   Seeds  |       73698  |       73699  |      99.964721    |
+--------------------------------------------------------------
+
+==25907== Profiling application: bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu100/evt10.txt
+==25907== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   43.13%  70.049ms       130  538.84us  191.37us  1.1871ms  Acts::Cuda::Kernels::findTriplets(unsigned long, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::LinCircle const *, Acts::Cuda::Details::LinCircle const *, float, float, float, float, float, float, unsigned int*, unsigned long*, unsigned int*, unsigned int*, Acts::Cuda::Details::Triplet*)
+                   15.41%  25.035ms       130  192.58us  88.005us  392.60us  Acts::Cuda::Kernels::transformCoordinates(unsigned int, unsigned int, unsigned int, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::LinCircle*, Acts::Cuda::Details::LinCircle*)
+                   12.12%  19.686ms       130  151.43us  40.099us  425.02us  Acts::Cuda::Kernels::filterTriplets2Sp(float (*) (Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &), bool (*) (float, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &), unsigned long, unsigned int, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long, unsigned int*, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::Triplet const *, float, float, float, unsigned long, unsigned int*, Acts::Cuda::Details::Triplet*)
+                    9.58%  15.565ms      1560  9.9770us     576ns  167.59us  [CUDA memcpy HtoD]
+                    8.68%  14.093ms       260  54.203us  7.2960us  138.79us  void Acts::Cuda::Kernels::findDublets<int=1>(unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const , float, float, float, float, float, unsigned int*, unsigned long*)
+                    8.54%  13.879ms       260  53.379us  7.5520us  148.65us  void Acts::Cuda::Kernels::findDublets<int=0>(unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const , float, float, float, float, float, unsigned int*, unsigned long*)
+                    2.17%  3.5230ms       912  3.8620us     736ns  62.500us  [CUDA memcpy DtoH]
+                    0.36%  592.68us       260  2.2790us  1.6640us  2.6240us  Acts::Cuda::Kernels::countDublets(unsigned long, unsigned int const *, unsigned int const *, Acts::Cuda::Details::DubletCounts*)
+      API calls:   46.02%  172.88ms         2  86.442ms  69.784ms  103.10ms  cudaMalloc
+                   41.10%  154.39ms       910  169.66us  2.8050us  1.2907ms  cudaDeviceSynchronize
+                   10.02%  37.628ms      2470  15.233us  2.5770us  334.11us  cudaMemcpy
+                    1.47%  5.5284ms      1170  4.7250us  3.3080us  18.401us  cudaLaunchKernel
+                    1.03%  3.8706ms         2  1.9353ms  929.09us  2.9416ms  cudaFree
+                    0.22%  808.74us      3121     259ns     172ns  2.3660us  cudaGetDevice
+                    0.03%  124.07us      1170     106ns      73ns     155ns  cudaGetLastError
+                    0.03%  95.207us         2  47.603us  27.675us  67.532us  cudaMemcpyFromSymbol
+                    0.02%  92.456us         1  92.456us  92.456us  92.456us  cuDeviceTotalMem
+                    0.02%  91.813us        97     946ns      85ns  39.236us  cuDeviceGetAttribute
+                    0.02%  78.021us         1  78.021us  78.021us  78.021us  cudaGetDeviceProperties
+                    0.01%  52.050us         1  52.050us  52.050us  52.050us  cuDeviceGetName
+                    0.00%  4.5680us         1  4.5680us  4.5680us  4.5680us  cuDeviceGetPCIBusId
+                    0.00%  2.7030us         3     901ns     133ns  2.2030us  cuDeviceGetCount
+                    0.00%  2.1410us         2  1.0700us  1.0260us  1.1150us  cudaSetDevice
+                    0.00%     485ns         1     485ns     485ns     485ns  cudaGetDeviceCount
+                    0.00%     484ns         2     242ns      93ns     391ns  cuDeviceGet
+                    0.00%     155ns         1     155ns     155ns     155ns  cuDeviceGetUuid
+[bash][atspot01]:build > nvprof bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu200/evt10.txt
+Read 360734 spacepoints from file: /atlas/acts_data/atlas_seeds/pu200/evt10.txt
+==25934== NVPROF is profiling process 25934, command: bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu200/evt10.txt
+Allocating 4746 MB memory on device:
+ /-- Device ID 0 -------------------------------\
+ | Name: GeForce RTX 2060                       |
+ | Max. threads per block: 1024                 |
+ | Concurrent kernels: true                     |
+ | Total memory: 5933.25 MB                     |
+ \----------------------------------------------/
+Done with the seedfinding on the host
+Done with the seedfinding on the device
+
+-------------------------- Results ---------------------------
+|          |     Host     |    Device    | Speedup/agreement |
+--------------------------------------------------------------
+| Time [s] |   13.427000  |        1.42  |       9.455634    |
+|   Seeds  |      171516  |      171516  |      99.949276    |
+--------------------------------------------------------------
+
+==25934== Profiling application: bin/ActsUnitTestSeedfinderCuda2 -f /atlas/acts_data/atlas_seeds/pu200/evt10.txt
+==25934== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   54.87%  368.42ms       469  785.55us  2.3360us  2.6192ms  Acts::Cuda::Kernels::findTriplets(unsigned long, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::LinCircle const *, Acts::Cuda::Details::LinCircle const *, float, float, float, float, float, float, unsigned int*, unsigned long*, unsigned int*, unsigned int*, Acts::Cuda::Details::Triplet*)
+                   14.75%  99.011ms       130  761.63us  341.56us  2.0818ms  Acts::Cuda::Kernels::transformCoordinates(unsigned int, unsigned int, unsigned int, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::LinCircle*, Acts::Cuda::Details::LinCircle*)
+                    8.54%  57.360ms       434  132.17us  15.489us  330.42us  Acts::Cuda::Kernels::filterTriplets2Sp(float (*) (Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &), bool (*) (float, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &, Acts::Cuda::Details::SpacePoint const &), unsigned long, unsigned int, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long, unsigned int*, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned int const *, unsigned long const *, Acts::Cuda::Details::Triplet const *, float, float, float, unsigned long, unsigned int*, Acts::Cuda::Details::Triplet*)
+                    8.09%  54.306ms      2238  24.265us     544ns  138.28us  [CUDA memcpy HtoD]
+                    5.64%  37.884ms       260  145.71us  22.402us  489.98us  void Acts::Cuda::Kernels::findDublets<int=1>(unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const , float, float, float, float, float, unsigned int*, unsigned long*)
+                    5.54%  37.163ms       260  142.93us  21.890us  488.06us  void Acts::Cuda::Kernels::findDublets<int=0>(unsigned long, Acts::Cuda::Details::SpacePoint const *, unsigned long, Acts::Cuda::Details::SpacePoint const , float, float, float, float, float, unsigned int*, unsigned long*)
+                    2.50%  16.760ms      1859  9.0150us     705ns  106.98us  [CUDA memcpy DtoH]
+                    0.07%  488.55us       260  1.8790us  1.5680us  2.5920us  Acts::Cuda::Kernels::countDublets(unsigned long, unsigned int const *, unsigned int const *, Acts::Cuda::Details::DubletCounts*)
+      API calls:   68.16%  642.62ms      1553  413.79us  2.4490us  2.7140ms  cudaDeviceSynchronize
+                   18.40%  173.47ms         2  86.733ms  69.582ms  103.88ms  cudaMalloc
+                   11.82%  111.47ms      4095  27.220us  2.6920us  435.52us  cudaMemcpy
+                    1.01%  9.5449ms      1813  5.2640us  3.3440us  222.48us  cudaLaunchKernel
+                    0.41%  3.8668ms         2  1.9334ms  934.31us  2.9325ms  cudaFree
+                    0.09%  857.77us      3121     274ns     174ns  3.2090us  cudaGetDevice
+                    0.02%  222.48us         1  222.48us  222.48us  222.48us  cuDeviceTotalMem
+                    0.02%  204.58us      1813     112ns      74ns     216ns  cudaGetLastError
+                    0.02%  204.06us        97  2.1030us     213ns  84.577us  cuDeviceGetAttribute
+                    0.02%  174.59us         1  174.59us  174.59us  174.59us  cudaGetDeviceProperties
+                    0.01%  113.31us         2  56.654us  28.314us  84.995us  cudaMemcpyFromSymbol
+                    0.00%  31.232us         1  31.232us  31.232us  31.232us  cuDeviceGetName
+                    0.00%  3.7120us         1  3.7120us  3.7120us  3.7120us  cuDeviceGetPCIBusId
+                    0.00%  3.6140us         2  1.8070us  1.0860us  2.5280us  cudaSetDevice
+                    0.00%  1.9800us         3     660ns     241ns  1.4120us  cuDeviceGetCount
+                    0.00%  1.1660us         2     583ns     223ns     943ns  cuDeviceGet
+                    0.00%     931ns         1     931ns     931ns     931ns  cudaGetDeviceCount
+                    0.00%     337ns         1     337ns     337ns     337ns  cuDeviceGetUuid
+

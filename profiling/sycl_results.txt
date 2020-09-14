@@ -1,0 +1,172 @@
+[bash][atspot01]:build > nvprof bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu20/evt10.txt -m -d GeForce
+==26648== NVPROF is profiling process 26648, command: bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu20/evt10.txt -m -d GeForce
+13:31:39    QueueWrapper   INFO      Running on: GeForce RTX 2060
+read 41629 SP from file /atlas/acts_data/atlas_seeds/pu20/evt10.txt
+Preparation time: 0.419125
+Analyzed 260 groups for CPU
+Analyzed 260 groups for SYCL
+
+------------------------- Time Metric -------------------------
+             Device:        CPU       SYCL  Speedup/ Agreement
+           Time (s):   0.082833   0.145147            0.570684
+        Seeds found:       7939       7939          100.000000
+---------------------------------------------------------------
+
+==26648== Profiling application: bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu20/evt10.txt -m -d GeForce
+==26648== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   17.81%  2.0421ms       260  7.8540us  1.5040us  85.509us  __typeinfo_name__(Acts::Sycl::filter_2sp_fixed_kernel)
+                   15.81%  1.8130ms      1690  1.0720us     672ns  2.5280us  [CUDA memcpy HtoD]
+                   10.98%  1.2595ms       260  4.8440us  1.9520us  15.745us  __typeinfo_name__(Acts::Sycl::duplet_search_bottom_kernel)
+                   10.90%  1.2495ms       260  4.8050us  1.9520us  16.481us  __typeinfo_name__(Acts::Sycl::duplet_search_top_kernel)
+                    9.63%  1.1044ms       260  4.2470us  2.1120us  12.449us  __typeinfo_name__(Acts::Sycl::triplet_search_kernel)
+                    7.49%  858.31us       961     893ns     832ns  2.2720us  [CUDA memcpy DtoH]
+                    6.36%  729.80us      1040     701ns     608ns  10.368us  [CUDA memset]
+                    5.98%  686.12us       130  5.2770us  4.0000us  6.0480us  __typeinfo_name__(Acts::Sycl::transform_coord_bottom_kernel)
+                    5.86%  671.60us       130  5.1660us  3.4560us  6.0800us  __typeinfo_name__(Acts::Sycl::transform_coord_top_kernel)
+                    5.16%  591.26us       520  1.1370us  1.0560us  1.5050us  [CUDA memcpy DtoD]
+                    2.09%  239.95us       130  1.8450us  1.7280us  1.9530us  __typeinfo_name__(Acts::Sycl::ind_copy_bottom_kernel)
+                    1.92%  220.46us       130  1.6950us  1.6000us  1.7920us  __typeinfo_name__(Acts::Sycl::ind_copy_top_kernel)
+      API calls:   39.27%  99.585ms         1  99.585ms  99.585ms  99.585ms  cuCtxCreate
+                   14.37%  36.434ms         1  36.434ms  36.434ms  36.434ms  cuCtxDestroy
+                   12.07%  30.609ms      4030  7.5950us  1.8180us  77.125us  cuMemAlloc
+                    9.44%  23.945ms       260  92.094us  91.218us  130.76us  cuDeviceTotalMem
+                    8.74%  22.164ms      4030  5.4990us  1.3450us  51.791us  cuMemFree
+                    6.16%  15.612ms      3171  4.9230us  1.6470us  25.139us  cuMemcpyAsync
+                    2.96%  7.5089ms      1560  4.8130us  3.4030us  13.651us  cuLaunchKernel
+                    2.01%  5.0883ms      6212     819ns     347ns  262.17us  cuEventSynchronize
+                    1.17%  2.9756ms     31600      94ns      73ns  261.03us  cuCtxGetCurrent
+                    1.07%  2.7209ms      1040  2.6160us  1.1880us  6.5370us  cuMemsetD8Async
+                    0.75%  1.9081ms      5772     330ns     188ns  262.86us  cuEventRecord
+                    0.63%  1.6045ms      5772     277ns     157ns  1.1150us  cuEventCreate
+                    0.38%  957.02us      5772     165ns     111ns     838ns  cuEventDestroy
+                    0.31%  774.33us      6503     119ns      82ns     500ns  cuDeviceGetAttribute
+                    0.22%  558.93us      4030     138ns     103ns     628ns  cuPointerGetAttribute
+                    0.20%  508.75us       520     978ns     376ns  261.37us  cuStreamWaitEvent
+                    0.16%  409.39us         1  409.39us  409.39us  409.39us  cuModuleLoadDataEx
+                    0.06%  144.28us         1  144.28us  144.28us  144.28us  cuModuleUnload
+                    0.02%  40.473us         4  10.118us  7.5460us  13.953us  cuDeviceGetName
+                    0.00%  7.4480us         1  7.4480us  7.4480us  7.4480us  cuStreamCreate
+                    0.00%  5.8290us         1  5.8290us  5.8290us  5.8290us  cuStreamDestroy
+                    0.00%  3.9820us        16     248ns     155ns     533ns  cuModuleGetFunction
+                    0.00%  2.0530us         1  2.0530us  2.0530us  2.0530us  cuStreamSynchronize
+                    0.00%  1.8690us         1  1.8690us  1.8690us  1.8690us  cuDeviceGetPCIBusId
+                    0.00%  1.0990us         1  1.0990us  1.0990us  1.0990us  cuCtxSynchronize
+                    0.00%     819ns         3     273ns      82ns     636ns  cuDeviceGetCount
+                    0.00%     466ns         2     233ns      88ns     378ns  cuDeviceGet
+                    0.00%     181ns         1     181ns     181ns     181ns  cuCtxPopCurrent
+[bash][atspot01]:build > nvprof bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu100/evt10.txt -m -d GeForce
+==26675== NVPROF is profiling process 26675, command: bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu100/evt10.txt -m -d GeForce
+13:31:45    QueueWrapper   INFO      Running on: GeForce RTX 2060
+read 189600 SP from file /atlas/acts_data/atlas_seeds/pu100/evt10.txt
+Preparation time: 0.613170
+Analyzed 260 groups for CPU
+Analyzed 260 groups for SYCL
+
+------------------------- Time Metric -------------------------
+             Device:        CPU       SYCL  Speedup/ Agreement
+           Time (s):   2.784884   0.513859            5.419552
+        Seeds found:      73698      73698           99.957939
+---------------------------------------------------------------
+
+==26675== Profiling application: bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu100/evt10.txt -m -d GeForce
+==26675== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   29.43%  26.823ms       260  103.17us  2.0480us  497.63us  __typeinfo_name__(Acts::Sycl::triplet_search_kernel)
+                   17.60%  16.043ms       260  61.703us  6.0810us  189.90us  __typeinfo_name__(Acts::Sycl::duplet_search_top_kernel)
+                   17.33%  15.800ms       260  60.770us  5.9840us  195.12us  __typeinfo_name__(Acts::Sycl::duplet_search_bottom_kernel)
+                   15.66%  14.272ms       260  54.893us  1.2800us  363.38us  __typeinfo_name__(Acts::Sycl::filter_2sp_fixed_kernel)
+                   10.12%  9.2215ms      1690  5.4560us     544ns  39.650us  [CUDA memcpy HtoD]
+                    2.78%  2.5309ms       988  2.5610us     672ns  41.699us  [CUDA memcpy DtoH]
+                    2.29%  2.0918ms       130  16.090us  7.8720us  27.746us  __typeinfo_name__(Acts::Sycl::transform_coord_top_kernel)
+                    2.20%  2.0032ms       130  15.409us  6.3040us  30.914us  __typeinfo_name__(Acts::Sycl::transform_coord_bottom_kernel)
+                    0.92%  834.19us       520  1.6040us     800ns  4.8010us  [CUDA memcpy DtoD]
+                    0.76%  691.85us      1040     665ns     512ns  1.0880us  [CUDA memset]
+                    0.47%  430.23us       130  3.3090us  1.6960us  5.6650us  __typeinfo_name__(Acts::Sycl::ind_copy_bottom_kernel)
+                    0.45%  407.56us       130  3.1350us  2.0160us  5.6320us  __typeinfo_name__(Acts::Sycl::ind_copy_top_kernel)
+      API calls:   33.86%  169.87ms      4030  42.150us  1.8400us  1.4603ms  cuMemAlloc
+                   19.28%  96.723ms         1  96.723ms  96.723ms  96.723ms  cuCtxCreate
+                   11.30%  56.693ms      4030  14.067us  1.8970us  78.119us  cuMemFree
+                   10.53%  52.804ms      3198  16.511us  1.6430us  386.93us  cuMemcpyAsync
+                    8.80%  44.159ms      6266  7.0470us     337ns  734.99us  cuEventSynchronize
+                    7.11%  35.680ms         1  35.680ms  35.680ms  35.680ms  cuCtxDestroy
+                    4.83%  24.226ms       260  93.176us  90.202us  160.45us  cuDeviceTotalMem
+                    1.58%  7.9353ms      1560  5.0860us  3.5710us  20.439us  cuLaunchKernel
+                    0.61%  3.0838ms      1040  2.9650us  1.1660us  19.569us  cuMemsetD8Async
+                    0.59%  2.9438ms     31735      92ns      72ns     835ns  cuCtxGetCurrent
+                    0.37%  1.8503ms      5799     319ns     160ns  1.3230us  cuEventCreate
+                    0.33%  1.6659ms      5799     287ns     180ns  3.7200us  cuEventRecord
+                    0.21%  1.0613ms      6503     163ns      83ns  236.09us  cuDeviceGetAttribute
+                    0.20%  1.0182ms      5799     175ns     112ns  1.0980us  cuEventDestroy
+                    0.18%  886.31us      4030     219ns     104ns  234.08us  cuPointerGetAttribute
+                    0.10%  509.82us         1  509.82us  509.82us  509.82us  cuModuleLoadDataEx
+                    0.05%  262.04us       520     503ns     357ns     738ns  cuStreamWaitEvent
+                    0.04%  178.04us         1  178.04us  178.04us  178.04us  cuModuleUnload
+                    0.01%  40.774us         4  10.193us  7.6700us  13.896us  cuDeviceGetName
+                    0.00%  9.6460us         1  9.6460us  9.6460us  9.6460us  cuStreamDestroy
+                    0.00%  7.3430us         1  7.3430us  7.3430us  7.3430us  cuStreamCreate
+                    0.00%  7.2580us         1  7.2580us  7.2580us  7.2580us  cuStreamSynchronize
+                    0.00%  4.2280us        16     264ns     162ns     480ns  cuModuleGetFunction
+                    0.00%  1.8460us         1  1.8460us  1.8460us  1.8460us  cuDeviceGetPCIBusId
+                    0.00%  1.1030us         3     367ns      90ns     915ns  cuDeviceGetCount
+                    0.00%  1.0670us         1  1.0670us  1.0670us  1.0670us  cuCtxSynchronize
+                    0.00%     396ns         2     198ns      84ns     312ns  cuDeviceGet
+                    0.00%     310ns         1     310ns     310ns     310ns  cuCtxPopCurrent
+[bash][atspot01]:build > nvprof bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu200/evt10.txt -m -d GeForce
+==26704== NVPROF is profiling process 26704, command: bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu200/evt10.txt -m -d GeForce
+13:31:53    QueueWrapper   INFO      Running on: GeForce RTX 2060
+read 360734 SP from file /atlas/acts_data/atlas_seeds/pu200/evt10.txt
+Preparation time: 0.830345
+Analyzed 260 groups for CPU
+Analyzed 260 groups for SYCL
+
+------------------------- Time Metric -------------------------
+             Device:        CPU       SYCL  Speedup/ Agreement
+           Time (s):  13.419969   1.699666            7.895652
+        Seeds found:     171516     171516           99.944611
+---------------------------------------------------------------
+
+==26704== Profiling application: bin/ActsUnitTestSeedfinderSycl -f /atlas/acts_data/atlas_seeds/pu200/evt10.txt -m -d GeForce
+==26704== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   42.31%  144.01ms       260  553.87us  2.6560us  2.6767ms  __typeinfo_name__(Acts::Sycl::triplet_search_kernel)
+                   15.09%  51.360ms       260  197.54us  28.226us  692.52us  __typeinfo_name__(Acts::Sycl::duplet_search_top_kernel)
+                   14.82%  50.430ms       260  193.96us  28.354us  686.22us  __typeinfo_name__(Acts::Sycl::duplet_search_bottom_kernel)
+                   12.40%  42.214ms       260  162.36us  1.9200us  651.97us  __typeinfo_name__(Acts::Sycl::filter_2sp_fixed_kernel)
+                    7.47%  25.412ms      1690  15.036us     544ns  112.36us  [CUDA memcpy HtoD]
+                    3.26%  11.082ms       975  11.365us     672ns  232.78us  [CUDA memcpy DtoH]
+                    1.61%  5.4715ms       130  42.088us  25.249us  84.645us  __typeinfo_name__(Acts::Sycl::transform_coord_bottom_kernel)
+                    1.59%  5.3959ms       130  41.506us  23.010us  80.197us  __typeinfo_name__(Acts::Sycl::transform_coord_top_kernel)
+                    0.46%  1.5569ms       520  2.9940us     800ns  12.545us  [CUDA memcpy DtoD]
+                    0.42%  1.4288ms       130  10.990us  5.3120us  20.513us  __typeinfo_name__(Acts::Sycl::ind_copy_top_kernel)
+                    0.38%  1.3055ms       130  10.042us  4.9920us  19.265us  __typeinfo_name__(Acts::Sycl::ind_copy_bottom_kernel)
+                    0.19%  662.37us      1040     636ns     480ns  1.3440us  [CUDA memset]
+      API calls:   38.94%  440.97ms      4030  109.42us  1.9410us  1.1480ms  cuMemAlloc
+                   18.71%  211.91ms      3185  66.534us  1.8880us  3.4176ms  cuMemcpyAsync
+                   17.37%  196.68ms      6240  31.518us     337ns  3.1918ms  cuEventSynchronize
+                    8.98%  101.65ms      4030  25.222us  1.7780us  250.90us  cuMemFree
+                    8.60%  97.436ms         1  97.436ms  97.436ms  97.436ms  cuCtxCreate
+                    3.21%  36.378ms         1  36.378ms  36.378ms  36.378ms  cuCtxDestroy
+                    2.16%  24.421ms       260  93.926us  90.632us  150.96us  cuDeviceTotalMem
+                    0.72%  8.1013ms      1560  5.1930us  3.4560us  234.05us  cuLaunchKernel
+                    0.34%  3.8336ms      1040  3.6860us  1.2730us  16.778us  cuMemsetD8Async
+                    0.29%  3.2309ms     31670     102ns      72ns  242.24us  cuCtxGetCurrent
+                    0.19%  2.1879ms      5786     378ns     150ns  241.07us  cuEventCreate
+                    0.18%  2.0299ms      5786     350ns     198ns  238.81us  cuEventRecord
+                    0.09%  1.0348ms      5786     178ns     113ns  1.4490us  cuEventDestroy
+                    0.07%  830.58us      6503     127ns      82ns     414ns  cuDeviceGetAttribute
+                    0.06%  709.60us      4030     176ns     104ns     609ns  cuPointerGetAttribute
+                    0.04%  505.37us         1  505.37us  505.37us  505.37us  cuModuleLoadDataEx
+                    0.03%  287.89us       520     553ns     410ns     777ns  cuStreamWaitEvent
+                    0.02%  185.14us         1  185.14us  185.14us  185.14us  cuModuleUnload
+                    0.01%  67.793us         4  16.948us  7.4620us  31.778us  cuDeviceGetName
+                    0.00%  11.445us         1  11.445us  11.445us  11.445us  cuStreamDestroy
+                    0.00%  8.1550us         1  8.1550us  8.1550us  8.1550us  cuStreamSynchronize
+                    0.00%  6.9550us         1  6.9550us  6.9550us  6.9550us  cuStreamCreate
+                    0.00%  4.5100us        16     281ns     171ns     524ns  cuModuleGetFunction
+                    0.00%  1.9820us         3     660ns     227ns  1.5050us  cuDeviceGetCount
+                    0.00%  1.8540us         1  1.8540us  1.8540us  1.8540us  cuDeviceGetPCIBusId
+                    0.00%  1.1660us         1  1.1660us  1.1660us  1.1660us  cuCtxSynchronize
+                    0.00%  1.0570us         2     528ns     233ns     824ns  cuDeviceGet
+                    0.00%     188ns         1     188ns     188ns     188ns  cuCtxPopCurrent
+
