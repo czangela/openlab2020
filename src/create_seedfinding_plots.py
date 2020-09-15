@@ -4,113 +4,120 @@ from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 import seaborn as sns
 
-def create_event_bins(df, num_bins):
-    '''
-        Create bins by event size.
-    '''
-    min_sp = df['event_size'].min()
-    max_sp = df['event_size'].max()
-    bin_size = int(np.ceil((max_sp-min_sp) / num_bins))
-    bin_range = np.arange(min_sp,max_sp+bin_size-1,bin_size)
-    return bin_range
+color_palette = sns.color_palette('Set2')
 
-def plot_precision_values(precision, bin_range):
+def plot_precision_values(precision, ax, color):
     '''
         Create plot with two subplots of precision values, that are
         calculated the following way: matched_seeds / cpu_seeds.
          - matched_seeds is the number of seeds that both the CPU and
-         gpu (SYCL) algorithm found
+         GPU algorithm found
          - cpu_seeds is the number of seeds found by the CPU algorithm
     '''
-    _, (ax0, ax1) = plt.subplots(1,2,figsize=(15,7))
-    common_color = sns.color_palette('Set2')[4]
-    common_xlabel='number of space points'
-    common_ylabel='precision (%)'
+    common_xlabel='number of space points (thousand)'
+    common_ylabel='percentage (%)'
+    common_title='Percentage of matched seeds'
 
     # scatter plot
     sns.scatterplot(x='event_size',
                     y='precision',
                     data=precision,
-                    ax=ax0,
-                    color=common_color)
+                    ax=ax,
+                    color=color_palette[color])
 
-    # binned plot
-    bin_of_event = pd.cut(precision['event_size'], bin_range)
-    precision = precision.assign(bins=bin_of_event)
+    ax.set(xlabel=common_xlabel, ylabel=common_ylabel, title=common_title)
 
-    prec_grouped = precision.groupby('bins')
-    prec_grouped.mean()[['precision']].plot(ax=ax1,
-                                            style='.--',
-                                            markersize=15,
-                                            color=common_color)
-    ax0.set(xlabel=common_xlabel, ylabel=common_ylabel, title='Percentage of matched seeds')
-    ax1.set(xlabel=common_xlabel, ylabel=common_ylabel, title='Mean percentage of matched seeds of binned events')
-    plt.xticks(rotation=15)
-
-def plot_runtime_values(runtime):
+def plot_runtime_values(runtime, ax):
     '''
-        Create plot of algorithm runtime values of the CPU and SYCL
-        (GPU) implementation.
+        Create plot of algorithm runtime values of the CPU and
+        GPU implementation.
     '''
-    _, ax0 = plt.subplots(1,1,figsize=(8,8))
-    common_xlabel ='number of space points'
+    common_xlabel ='number of space points (thousand)'
     common_ylabel='time (s)'
-    cpu_color = sns.color_palette('Set2')[1]
-    gpu_color = sns.color_palette('Set2')[0]
+    cpu_color = color_palette[1]
+    gpu_color = color_palette[0]
 
-    sns.scatterplot(x='event_size', y='cpu_time', data=runtime, ax=ax0, color=cpu_color)
-    sns.scatterplot(x='event_size', y='gpu_time', data=runtime, ax=ax0, color=gpu_color)
+    sns.scatterplot(x='event_size', y='cpu_time', data=runtime, ax=ax, color=cpu_color)
+    sns.scatterplot(x='event_size', y='gpu_time', data=runtime, ax=ax, color=gpu_color)
 
     # set labels and legends
-    ax0.set(xlabel=common_xlabel, ylabel=common_ylabel, title='CPU and SYCL (GPU) algorithm runtime')
+    ax.set(xlabel=common_xlabel, ylabel=common_ylabel)
     # custom legend
     custom_legend_lines = [ Line2D([0], [0], color=cpu_color, lw=4),
                             Line2D([0], [0], color=gpu_color, lw=4)]
-    ax0.legend(custom_legend_lines, ['CPU','GPU'], title='Algorithm')
+    ax.legend(custom_legend_lines, ['CPU','GPU'], title='Algorithm')
     
-def plot_speedup_values(speedup, bin_range):
+def plot_speedup_values(speedup_sycl, ax, color):
     '''
         Create plot with two subplots of speed-up values.
     '''
-    _, (ax0, ax1) = plt.subplots(1,2,figsize=(15,7))
-    common_xlabel='number of space points'
+    common_xlabel='number of space points (thousand)'
     common_ylabel='speed-up factor'
-    common_color = sns.color_palette('Set2')[2]
 
     sns.scatterplot(x='event_size',
                     y='speedup',
-                    data=speedup,
-                    ax=ax0,
-                    color=common_color)
+                    data=speedup_sycl,
+                    ax=ax,
+                    color=color_palette[color])
 
-    bin_of_event = pd.cut(speedup['event_size'],bin_range)
-    speedup = speedup.assign(bins=bin_of_event)
-    speedup.groupby('bins').mean()[['speedup']].plot(   ax = ax1,
-                                                        style='.--',
-                                                        markersize=15,
-                                                        color=common_color)
+    ax.set(xlabel=common_xlabel,
+            ylabel=common_ylabel)
 
-    ax0.set(xlabel=common_xlabel,
-            ylabel=common_ylabel,
-            title='Speed-up factor of SYCL GPU seed finding algorithm')
+def sycl_seeding_plots(df_sycl):
+    # filter necessary columns for different plots
+    runtime = df_sycl[['event_size', 'gpu_time', 'cpu_time']]
+    speedup = df_sycl[['event_size', 'speedup']]
+    df_sycl['precision'] = df_sycl['seed_matches'] / df_sycl['cpu_seeds'] *100
+    precision = df_sycl[['event_size', 'precision']]
 
-    ax1.set(xlabel=common_xlabel,
-            ylabel=common_ylabel,
-            title='Mean speed-up factor of binned events')
-    plt.xticks(rotation=15)
+    _,(runtime_axis, speedup_axis, precision_axis) = plt.subplots(1,3,figsize=(20,5))
+    speedup_title='Speed-up factor of SYCL (GPU) seed finding algorithm'
+    runtime_title='CPU and SYCL (GPU) algorithm runtime'
+
+    plot_runtime_values(runtime, runtime_axis)
+    plot_speedup_values(speedup, speedup_axis, 2)
+    plot_precision_values(precision, precision_axis, 6)
+
+    runtime_axis.set(title=runtime_title)
+    speedup_axis.set(title=speedup_title)
+
+    _,(single_runtime_axis) = plt.subplots(1,1, figsize=(7,7))
+    plot_runtime_values(runtime,single_runtime_axis)
+    single_runtime_axis.set(title=runtime_title)
+
+    _,(single_speedup_axis) = plt.subplots(1,1, figsize=(7,7))
+    plot_speedup_values(speedup,single_speedup_axis, 2)
+    single_speedup_axis.set(title=speedup_title)
+
+    _,(single_precision_axis) = plt.subplots(1,1, figsize=(7,7))
+    plot_precision_values(precision,single_precision_axis,6)
+
+def sycl_cuda_comparison_plot(df_sycl, df_cuda):
+    
+    speedup_sycl = df_sycl[['event_size', 'speedup']]
+    speedup_cuda = df_cuda[['event_size', 'speedup']]
+    cuda_color=6
+    sycl_color=2
+
+    _,(compare_axis) = plt.subplots(1,1,figsize=(7,7))
+    speedup_title='Speed-up factor of SYCL and CUDA seed finding algorithm'
+    plot_speedup_values(speedup_cuda, compare_axis, cuda_color)
+    plot_speedup_values(speedup_sycl, compare_axis, sycl_color)
+    compare_axis.set(title=speedup_title)
+    custom_legend_lines = [ Line2D([0], [0], color=color_palette[cuda_color], lw=4),
+                            Line2D([0], [0], color=color_palette[sycl_color], lw=4)]
+    compare_axis.legend(custom_legend_lines, ['CUDA','SYCL'], title='Algorithm')
 
 # read csv file of seedfinding results to dataframe
-df = pd.read_csv('../data/seedfinding_sycl.csv')
-bin_range = create_event_bins(df, 10)
+df_sycl = pd.read_csv('../data/seedfinding_sycl.csv')
+df_cuda = pd.read_csv('../data/seedfinding_cuda.csv')
 
-# filter necessary columns for different plots
-runtime = df[['event_size', 'gpu_time', 'cpu_time']]
-speedup = df[['event_size', 'speedup']]
-df['precision'] = df['seed_matches'] / df['cpu_seeds']
-precision = df[['event_size', 'precision']]
+# divide event size by a thousand
+df_sycl['event_size'] = df_sycl['event_size'] / 1000
+df_cuda['event_size'] = df_cuda['event_size'] / 1000
 
 # plotting
-plot_precision_values(precision, bin_range)
-plot_speedup_values(speedup, bin_range)
-plot_runtime_values(runtime)
+sycl_seeding_plots(df_sycl)
+sycl_cuda_comparison_plot(df_sycl,df_cuda)
+
 plt.show()
